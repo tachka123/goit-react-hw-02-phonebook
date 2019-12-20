@@ -17,6 +17,10 @@
   width: 150px;
 }
 
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 .center {
   margin: 0 auto;
 }

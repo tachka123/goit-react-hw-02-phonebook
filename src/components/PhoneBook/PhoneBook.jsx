@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import AddNew from './AddNewUser';
+import AddNew from './SectionAddNewUser';
 import ListOfUsers from './ListOfUsers';
 import style from './sectionAddNew.module.css';
 
 class PhoneBook extends Component {
   state = {
     contacts: [],
-    name: '',
-    number: '',
     filter: '',
   };
 
@@ -23,14 +21,9 @@ class PhoneBook extends Component {
     );
   };
 
-  handleOnChange = e => {
-    const targetName = e.target.name;
-    this.setState({ [targetName]: e.target.value });
-  };
-
-  addUser = () => {
-    const { name, number, contacts } = this.state;
-    if (name === '' || number === '') {
+  addUser = (name, number) => {
+    const { contacts } = this.state;
+    if (!name || !number) {
       alert('One of fields is empty! Please fill all inputs!');
       return;
     }
@@ -42,10 +35,8 @@ class PhoneBook extends Component {
       return {
         contacts: [
           ...prev.contacts,
-          { name: prev.name, number: prev.number, id: uuid() },
+          { name: name, number: number, id: uuid() },
         ],
-        name: '',
-        number: '',
         filter: '',
       };
     });
@@ -59,17 +50,12 @@ class PhoneBook extends Component {
     });
   };
 
-  render() {
+  render () {
     const filtered = this.filteredUsers();
-    const { name, number, filter } = this.state;
+    const { filter } = this.state;
     return (
       <div className={style.center}>
-        <AddNew
-          inputName={name}
-          inputNum={number}
-          handleOnChange={this.handleOnChange}
-          addUser={this.addUser}
-        />
+        <AddNew addUser={this.addUser} />
         <ListOfUsers
           filter={filter}
           OnFilterUsers={this.filter}
