@@ -10,6 +10,20 @@ class PhoneBook extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    if (contacts) {
+      this.setState({ contacts: JSON.parse(contacts) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
+
   filter = e => {
     this.setState({ filter: e.target.value });
   };
@@ -33,10 +47,7 @@ class PhoneBook extends Component {
     }
     this.setState(prev => {
       return {
-        contacts: [
-          ...prev.contacts,
-          { name: name, number: number, id: uuid() },
-        ],
+        contacts: [...prev.contacts, { name, number, id: uuid() }],
         filter: '',
       };
     });
@@ -50,7 +61,7 @@ class PhoneBook extends Component {
     });
   };
 
-  render () {
+  render() {
     const filtered = this.filteredUsers();
     const { filter } = this.state;
     return (

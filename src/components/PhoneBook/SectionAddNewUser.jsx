@@ -21,7 +21,7 @@ class SectionAddNewUser extends Component {
     this.setState({ [targetName]: e.target.value });
   };
 
-  render () {
+  render() {
     const { name, number } = this.state;
     const { addUser } = this.props;
     return (
@@ -37,9 +37,9 @@ class SectionAddNewUser extends Component {
           <h2>Name</h2>
           <input
             value={name}
-            name='name'
+            name="name"
             onChange={this.handleOnChange}
-            type='text'
+            type="text"
           />
         </label>
         <label htmlFor={numberId}>
@@ -47,12 +47,12 @@ class SectionAddNewUser extends Component {
           <input
             className={style.inputNumber}
             value={number}
-            name='number'
+            name="number"
             onChange={this.handleOnChange}
-            type='number'
+            type="number"
           />
         </label>
-        <button type='submit'>Add contact</button>
+        <button type="submit">Add contact</button>
       </form>
     );
   }
