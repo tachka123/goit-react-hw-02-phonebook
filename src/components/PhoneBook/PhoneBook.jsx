@@ -39,11 +39,11 @@ class PhoneBook extends Component {
     const { contacts } = this.state;
     if (!name || !number) {
       alert('One of fields is empty! Please fill all inputs!');
-      return;
+      return false;
     }
     if (contacts.find(item => item.name === name)) {
       alert('User with this name already created! Try another one');
-      return;
+      return false;
     }
     this.setState(prev => {
       return {
@@ -51,6 +51,7 @@ class PhoneBook extends Component {
         filter: '',
       };
     });
+    return true;
   };
 
   deleteUser = id => {

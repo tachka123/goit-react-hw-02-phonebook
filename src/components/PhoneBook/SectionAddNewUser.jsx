@@ -17,22 +17,26 @@ class SectionAddNewUser extends Component {
   };
 
   handleOnChange = e => {
-    const targetName = e.target.name;
-    this.setState({ [targetName]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'number' && isNaN(value)) {
+      return;
+    }
+    this.setState({ [name]: value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const { addUser } = this.props;
+    const { name, number } = this.state;
+    const resultOfAdd = addUser(name, number);
+    if (!resultOfAdd) return;
+    this.setState({ name: '', number: '' });
   };
 
   render() {
     const { name, number } = this.state;
-    const { addUser } = this.props;
     return (
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          addUser(name, number);
-          this.setState({ name: '', number: '' });
-        }}
-        className={style.container}
-      >
+      <form onSubmit={this.onSubmit} className={style.container}>
         <label htmlFor={nameId}>
           <h2>Name</h2>
           <input
@@ -49,7 +53,7 @@ class SectionAddNewUser extends Component {
             value={number}
             name="number"
             onChange={this.handleOnChange}
-            type="number"
+            type="text"
           />
         </label>
         <button type="submit">Add contact</button>
